@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace HRMS_api.Controllers
-{
+{   
     [Route("api/[controller]")]
     [ApiController]
     
@@ -22,9 +22,11 @@ namespace HRMS_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
-            return Ok(await _context.Employees.Include(e => e.Department)
-                                              .Include(e => e.Role)
-                                              .Include(e => e.Position).ToListAsync());
+            return Ok(await _context.Employees
+                                               //.Include(e => e.Department)
+                                              //.Include(e => e.Role)
+                                              //.Include(e => e.Position)
+                                              .ToListAsync());
         }
 
         [HttpGet("{id}")]
