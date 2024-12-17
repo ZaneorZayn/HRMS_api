@@ -23,7 +23,7 @@ namespace HRMS_api.Controllers
         public async Task<IActionResult> GetAllEmployees()
         {
             return Ok(await _context.Employees
-                                               //.Include(e => e.Department)
+                                              //.Include(e => e.Department)
                                               //.Include(e => e.Role)
                                               //.Include(e => e.Position)
                                               .ToListAsync());
