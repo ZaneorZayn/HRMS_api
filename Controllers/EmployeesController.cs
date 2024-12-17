@@ -22,12 +22,35 @@ namespace HRMS_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
-            return Ok(await _context.Employees
-                                              //.Include(e => e.Department)
-                                              //.Include(e => e.Role)
-                                              //.Include(e => e.Position)
-                                              .ToListAsync());
+            var employees = await _context.Employees
+                                          .Include(e => e.Department)
+                                          .Include(e => e.Position)
+                                          .Include(e => e.Role)
+                                          .Include(e => e.Attendances) // Include Attendances
+                                          .Select(e => new
+                                          {
+                                              e.EmployeeId,
+                                              e.FullName,
+                                              e.PhoneNumber,
+                                              e.HiredDate,
+                                              Department = e.Department != null ? e.Department.DepartmentName : null,
+                                              Position = e.Position != null ? e.Position.PositionName : null,
+                                              Role = e.Role != null ? e.Role.RoleName : null,
+                                              e.Status,
+                                              Attendances = e.Attendances.Select(a => new
+                                              {
+                                                  a.AttendanceId,
+                                                  a.Date,
+                                                  Status = a.Status.ToString(),
+                                                  a.CheckInTime,
+                                                  a.CheckOutTime,
+                                              })
+                                          })
+                                          .ToListAsync();
+
+            return Ok(employees);
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeById(int id)
