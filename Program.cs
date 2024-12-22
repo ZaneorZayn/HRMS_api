@@ -1,12 +1,26 @@
 using HRMS_api.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using HRMS_api.Repositories;
+using HRMS_api.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<HrmsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
+
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 
 
