@@ -50,6 +50,8 @@ namespace HRMS_api.Data
                 .HasOne(e => e.Position)
                 .WithMany(p => p.Employees)
                 .HasForeignKey(e => e.PositionId);
+
+            
         }
     }
 }

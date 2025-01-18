@@ -3,6 +3,6 @@
     public enum Status
     {
         Present = 1,
-        Absent = 2,
+        Absent = 0,
     }
 }
