@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HRMS_api.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace HRMS_api.Dto
 {
@@ -25,5 +26,7 @@ namespace HRMS_api.Dto
         public int PositionId { get; set; } // Foreign key for position
 
         public int RoleId { get; set; } // Foreign key for role
+
+        public Status Status { get; set; } // Status of the employee
     }
 }
